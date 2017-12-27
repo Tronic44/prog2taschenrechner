@@ -135,22 +135,27 @@ public class Calculate{
 		return div(d,b);
 	}
 	public static Object div(Bruch b1, Bruch b2){
-		return null;
+		return new Bruch(b1.getZeahler()*b2.getNenner(), b1.getNenner()* b2.getZeahler());
 	}
-	public static Object div(double b, Komplex i){
-		return null;
+	public static Object div(double d, Komplex i){
+		Komplex i2 = new Komplex(d,0);
+		return div(i2,i);
 	}
 	public static Object div(Komplex i, double d){
-		return null;
+		return new Komplex(i.getReell()/d, i.getImag()/d);
 	}
 	public static Object div(Komplex i, Bruch b){
-		return null;
+		return div(i,toDouble(b));
 	}
 	public static Object div(Bruch b, Komplex i){
-		return null;
+		return div(toDouble(b),i);
 	}
 	public static Object div(Komplex i1, Komplex i2){
-		return mult(i1,i2.komrezi());
+		Komplex k1 = new Komplex(i2.komrezi().getReell(), i2.komrezi().getImag());
+		double multreellup = k1.getReell()*i1.getReell()-k1.getImag()*i1.getImag();
+		double multimag = k1.getReell()*i1.getImag()+k1.getImag()*i1.getReell();
+		double multreelldown = k1.getReell()*i2.getReell()-k1.getImag()*i2.getImag();
+		return (new Komplex(multreellup/multreelldown, multimag/multreelldown));
 	}
 	
 }

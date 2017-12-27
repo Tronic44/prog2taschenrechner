@@ -26,7 +26,7 @@ public class Parse {
 						sclip = input.substring(input.indexOf("("), input.indexOf(")"));
 						first = sclip.substring(1, sclip.length()-1);
 					}catch(Exception g){
-						main.stop("Irgendwie stimmt die Klammer nicht! #210", input);
+						Main.stop("Irgendwie stimmt die Klammer nicht! #210", input);
 					}
 				}
 			}
@@ -36,7 +36,7 @@ public class Parse {
 			}
 			input = input.replaceAll(Pattern.quote(sclip), resort(clip).toString()+" ");//hier muss das ergebnis von der Klammer rein!
 		}if(input.contains("(")^input.contains(")")){	
-			main.stop("Falsche Klammer Setzung #212" , input);
+			Main.stop("Falsche Klammer Setzung #212" , input);
 		}
 		String[] split = input.split(" ");	
 		for (int i = 0; i < split.length; i++) {
@@ -84,21 +84,21 @@ public class Parse {
 					nenner = Integer.parseInt(newbruch[1]);
 					return new Bruch(zaehler,nenner);
 					}catch(NumberFormatException e){
-						main.stop("In Brüchen stehen ganze Zahlen #221" ,check);
+						Main.stop("In Brï¿½chen stehen ganze Zahlen #221" ,check);
 					}
 				}else{
-					main.stop("Kein echter Bruch #222", check);
+					Main.stop("Kein echter Bruch #222", check);
 				}
 			}
-			main.stop("kein Gültiges Zeichen #223", check);	
+			Main.stop("kein Gï¿½ltiges Zeichen #223", check);	
 			return null;
 		}
 		
 	}
 	/**
-	 * testet alle Kombinationen, wie eine Imaginäre Zahl aufgabut ist
-	 * @param check die zu überprüfende Zeichenkette
-	 * @return die fertige Imaginäre Zahl
+	 * testet alle Kombinationen, wie eine Imaginï¿½re Zahl aufgabut ist
+	 * @param check die zu ï¿½berprï¿½fende Zeichenkette
+	 * @return die fertige Imaginï¿½re Zahl
 	 * @throws FailException falls eine Konvetion nicht eingehalten wurde
 	 */
 	private static Komplex readimag(String check) throws FailException{
@@ -117,7 +117,7 @@ public class Parse {
 						return new Komplex(reell,imag);
 					}
 				}else{
-					main.stop("keine gültige Imaginäre Zahl #231", check);		
+					Main.stop("keine gï¿½ltige Imaginï¿½re Zahl #231", check);		
 				}
 			}else{ 
 				if(check.contains("-")){
@@ -133,22 +133,22 @@ public class Parse {
 							return new Komplex(reell,imag*(-1));
 						}
 					}else{
-						main.stop("keine gültige Imaginäre Zahl #232", check);			
+						Main.stop("keine gï¿½ltige Imaginï¿½re Zahl #232", check);			
 					}
 				}else{
-					main.stop("keine gültige Imaginäre Zahl #233", check);
+					Main.stop("keine gï¿½ltige Imaginï¿½re Zahl #233", check);
 				}
 			}
-			main.stop("keine gültige Imaginäre Zahl #234", check);
+			Main.stop("keine gï¿½ltige Imaginï¿½re Zahl #234", check);
 		}catch(Exception e){
-			main.stop("Keine gültige Imaginäre Zahl #235", check);
+			Main.stop("Keine gï¿½ltige Imaginï¿½re Zahl #235", check);
 		}
 		return null;
 	}
 	/**
-	 * Zählt die Elemente abzüglich 'null'
+	 * Zï¿½hlt die Elemente abzï¿½glich 'null'
 	 * @param count Object-Array 
-	 * @return Int-Anzahl der Elemente abzüglich derer, die 'null' sind
+	 * @return Int-Anzahl der Elemente abzï¿½glich derer, die 'null' sind
 	 */
 	private static int nullcounter (Object[] count){
 		int real=0;
@@ -197,7 +197,7 @@ public class Parse {
 	}
 	
 	/**
-	 * Entfernt alle 'null' -Objecte und "sortiert" das Array neu und kürzt es auf die minimale Größe
+	 * Entfernt alle 'null' -Objecte und "sortiert" das Array neu und kï¿½rzt es auf die minimale Grï¿½ï¿½e
 	 * @param all
 	 * @return Das verkleinerte Object-Array
 	 */
@@ -214,13 +214,13 @@ public class Parse {
 	}
 	
 	public static Object resort(Object[] all) throws FailException{
-		//wenn das Array nur noch ein Element hat, muss es die Lösung sein
+		//wenn das Array nur noch ein Element hat, muss es die Lï¿½sung sein
 		if(all.length==1){
 			return all[0];
 		}
-		//wenn nicht wird das Array genommen, kopiert und alle leeren einträge entfernt
+		//wenn nicht wird das Array genommen, kopiert und alle leeren eintrï¿½ge entfernt
 		Object[] allmini = all;
-		//das gekürzte Array wird jetzt im sinne von punkt vor strich durchgegangen und berechnet
+		//das gekï¿½rzte Array wird jetzt im sinne von punkt vor strich durchgegangen und berechnet
 		Object result;
 		while(punktcounter(removenull(allmini))){
 			allmini = removenull(allmini);
@@ -262,7 +262,7 @@ public class Parse {
 				
 			}
 		}
-		//das nun verkürze Arry durchläuft die berechnung nochmal
+		//das nun verkï¿½rze Arry durchlï¿½uft die berechnung nochmal
 		return resort(removenull(allmini));
 	}
 	
@@ -283,7 +283,7 @@ public class Parse {
 							case "java.lang.Double":
 									return Calculate.mult((Bruch)all[i-1],(Double) all[i+1]);
 							default:
-									main.stop("Dicide Error #251", all[i+1]); break;
+									Main.stop("Dicide Error #251", all[i+1]); break;
 							}
 							break;
 						case "Komplex":
@@ -295,7 +295,7 @@ public class Parse {
 							case "java.lang.Double":
 									return Calculate.mult((Komplex)all[i-1],(Double) all[i+1]);
 							default:
-									main.stop("Dicide Error #252", all[i+1]); break;
+									Main.stop("Dicide Error #252", all[i+1]); break;
 							}
 						case "java.lang.Double":
 							switch (all[i+1].getClass().getName()) {
@@ -306,10 +306,10 @@ public class Parse {
 							case "java.lang.Double":
 									return Calculate.mult((Double)all[i-1],(Double) all[i+1]);
 							default:
-									main.stop("Dicide Error #253", all[i+1]); break;
+									Main.stop("Dicide Error #253", all[i+1]); break;
 							}
 						default:
-							main.stop("Fataler Dicide Error #254", "Error");
+							Main.stop("Fataler Dicide Error #254", "Error");
 							break;
 						}
 					}
@@ -324,7 +324,7 @@ public class Parse {
 						case "java.lang.Double":
 								return Calculate.div((Bruch)all[i-1],(Double) all[i+1]);
 						default:
-								main.stop("Dicide Error #255", all[i+1]); break;
+								Main.stop("Dicide Error #255", all[i+1]); break;
 						}
 						break;
 					case "Komplex":
@@ -336,7 +336,7 @@ public class Parse {
 						case "java.lang.Double":
 								return Calculate.div((Komplex)all[i-1],(Double) all[i+1]);
 						default:
-								main.stop("Dicide Error #256", all[i+1]); break;
+								Main.stop("Dicide Error #256", all[i+1]); break;
 						}
 					case "java.lang.Double":
 						switch (all[i+1].getClass().getName()) {
@@ -347,15 +347,15 @@ public class Parse {
 						case "java.lang.Double":
 								return Calculate.div((Double)all[i-1],(Double) all[i+1]);
 						default:
-								main.stop("Dicide Error #257", all[i+1]); break;
+								Main.stop("Dicide Error #257", all[i+1]); break;
 						}
 					default:
-						main.stop("Fataler Dicide Error #258", "Error");
+						Main.stop("Fataler Dicide Error #258", "Error");
 						break;
 					}
 				}
 		} catch (ArrayIndexOutOfBoundsException e) {
-			main.stop("Falsche Eingabe", all[i]);
+			Main.stop("Falsche Eingabe", all[i]);
 		}
 			
 				
@@ -374,7 +374,7 @@ public class Parse {
 				case "java.lang.Double":
 						return Calculate.add((Bruch)all[i-1],(Double) all[i+1]);
 				default:
-						main.stop("Dicide Error #261", all[i+1]); break;
+						Main.stop("Dicide Error #261", all[i+1]); break;
 				}
 				break;
 			case "Komplex":
@@ -386,7 +386,7 @@ public class Parse {
 				case "java.lang.Double":
 						return Calculate.add((Komplex)all[i-1],(Double) all[i+1]);
 				default:
-						main.stop("Dicide Error #262", all[i+1]); break;
+						Main.stop("Dicide Error #262", all[i+1]); break;
 				}
 			case "java.lang.Double":
 				switch (all[i+1].getClass().getName()) {
@@ -397,10 +397,10 @@ public class Parse {
 				case "java.lang.Double":
 						return Calculate.add((Double)all[i-1],(Double) all[i+1]);
 				default:
-						main.stop("Dicide Error #263", all[i+1]); break;
+						Main.stop("Dicide Error #263", all[i+1]); break;
 				}
 			default:
-				main.stop("Fataler Dicide Error #264", "Error");
+				Main.stop("Fataler Dicide Error #264", "Error");
 				break;
 			}
 		}
@@ -415,7 +415,7 @@ public class Parse {
 				case "java.lang.Double":
 						return Calculate.sub((Bruch)all[i-1],(Double) all[i+1]);
 				default:
-						main.stop("Dicide Error #265", all[i+1]); break;
+						Main.stop("Dicide Error #265", all[i+1]); break;
 				}
 				break;
 			case "Komplex":
@@ -427,7 +427,7 @@ public class Parse {
 				case "java.lang.Double":
 						return Calculate.sub((Komplex)all[i-1],(Double) all[i+1]);
 				default:
-						main.stop("Dicide Error #266", all[i+1]); break;
+						Main.stop("Dicide Error #266", all[i+1]); break;
 				}
 			case "java.lang.Double":
 				switch (all[i+1].getClass().getName()) {
@@ -438,10 +438,10 @@ public class Parse {
 				case "java.lang.Double":
 						return Calculate.sub((Double)all[i-1],(Double) all[i+1]);
 				default:
-						main.stop("Dicide Error #267", all[i+1]); break;
+						Main.stop("Dicide Error #267", all[i+1]); break;
 				}
 			default:
-				main.stop("Fataler Dicide Error #268", "Error");
+				Main.stop("Fataler Dicide Error #268", "Error");
 				break;
 			}
 		}

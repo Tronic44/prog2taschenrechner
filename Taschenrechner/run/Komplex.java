@@ -1,6 +1,6 @@
 
 /**
- * Die Klasse Komplex, die für Komplexe Zahlendefiniert ist
+ * Die Klasse Komplex, die fï¿½r Komplexe Zahlendefiniert ist
  * @author yannick
  *
  */
@@ -11,18 +11,35 @@ public class Komplex {
 	/**
      * Konstruktor fuer die Klasse Komplex
      * @param reell ist der Reelle Anteil der Komplexen Zahl
-     * @param imag ist der Imaginäre Anteil der Komplexen Zahl
+     * @param imag ist der Imaginï¿½re Anteil der Komplexen Zahl
      */
 	public Komplex(double reell, double imag) {
 		this.reell = Math.round(reell*100.0)/100.0;
 		this.imag = Math.round(imag*100.0)/100.0;
 	}
 	/**
-	 * Gibt eine Komplexe Zahl, gemäß der Notaion: "Reelleranteil +- Imaginäreranteil*i" aus, selbst wenn ein Anteil den Wert 0 hat.
-	 * Allerdings wird aus optischen Gründen die Zahl hier auf zwei Nachkommastellen gerundet!
+	 * Gibt eine Komplexe Zahl, gemï¿½ï¿½ der Notaion: "Reelleranteil +- Imaginï¿½reranteil*i" aus, selbst wenn ein Anteil den Wert 0 hat.
+	 * Allerdings wird aus optischen Grï¿½nden die Zahl hier auf zwei Nachkommastellen gerundet!
 	 */
 	@Override
 	public String toString() {
+		if(this.imag==0) {
+			if(this.reell==0) {
+				return ""+0;
+			}else {
+				return ""+reell;
+			}
+		}else {
+			if(this.reell==0) {
+				if(this.imag>0){
+					return "+"+imag+"i" ;
+				}
+				else {
+					return "-"+imag*(-1)+"i" ;
+				}
+			}
+		}
+			
 		if(this.imag>0){
 			return ""+reell + " + i*"+imag ;
 		}
@@ -37,7 +54,7 @@ public class Komplex {
 		return reell;
 	}
 	/**
-	 * Liefert den Imaginären Anteil einer Komplexen Zahl
+	 * Liefert den Imaginï¿½ren Anteil einer Komplexen Zahl
 	 */
 	public double getImag() {
 		return imag;
