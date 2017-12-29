@@ -3,9 +3,10 @@ public class Main {
 	static int testaud2 = 0;
 
 	public static void main(String[] args) {
-	String input = "1 / 4-3i + 1 / 4+3i";
+//	String input = "1 / 4-3i + 1 / 4+3i";
+		String input = "(1 + 2 * (3 + 4))+5";
 		try {
-			Parse.split(input);
+			Parse.start(input);
 		} catch (FailException e) {
 			System.out.println();
 			}
