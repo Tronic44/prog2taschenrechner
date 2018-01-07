@@ -1,8 +1,9 @@
+import java.util.Iterator;
 import java.util.regex.Pattern;
 
 public class Parse {
 	private static Object[] list = new Object[10];
-	private static Object[] clip = new Object[10];
+	// private static Object[] clip = new Object[10];
 	private static String input;
 
 	/**
@@ -10,79 +11,90 @@ public class Parse {
 	 * ein Object Array um Modifiziert die Klassenvariable Object list[] und clip[]!
 	 * 
 	 * @param input
-	 *            Der Input String, der ANalysiert werden soll
+	 *            Der Input String, der Analysiert werden soll
 	 * @throws FailException
 	 */
 	public static void start(String start) throws FailException {
-		input = split(new StringBuilder(start)).toString();
-		testeklammer(input);
-		split(new StringBuilder(input));
+		testeklammer(start);
+		if (start.contains("(")) {
+			input = split(new StringBuilder(start)).toString();
+			System.out.println("Ergebnis:  " + input);
+		} else {
+			String[] splited = start.split(" ");
+			for (int i = 0; i < splited.length; i++) {
+				list[i] = search(splited[i]);
+			}
+//			for (Object i : list) {
+//				System.out.println(i);
+//			}
 
-		//
-		// if(input.contains("(")&&input.contains(")")){
-		// String sclip = "";
-		// String first = "";
-		// try{
-		// sclip = input.substring(input.indexOf("("), input.indexOf(")")+2);
-		// first = sclip.substring(1, sclip.length()-2);
-		// }catch(Exception e){
-		// try{
-		// sclip = input.substring(input.indexOf("("), input.indexOf(")")+1);
-		// first = sclip.substring(1, sclip.length()-1);
-		// }catch(Exception g){
-		// Main.stop("Irgendwie stimmt die Klammer nicht! #210", input);
-		// }
-		// }
-		// String[] firstsplit = first.split(" ");
-		// for(int j = 0; j<firstsplit.length; j++){
-		// clip[j] = search(firstsplit[j]);
-		// }
-		// input = input.replaceAll(Pattern.quote(sclip), resort(clip).toString()+"
-		// ");//hier muss das ergebnis von der Klammer rein!
-		// }
-		//
-		//
-		//
-		//
-		// String[] split = input.split(" ");
-		// for (int i = 0; i < split.length; i++) {
-		// list[i] = search(split[i]);
-		// }
-		// for(Object i: list){
-		// System.out.println(i);
-		// }
+			System.out.println("Egebnis: " + resort(list));
+		}
 
-		System.out.println(input);
-		System.out.println(resort(list));
 	}
-
+	private static String order(String check) {
+		String[] all = check.split(" ");
+		for (int i = 0 ; i < all.length ; i++) {
+			if(all[i].contains("i")) {
+				continue;
+			}try {
+				Double.parseDouble(all[i]);
+				continue;
+			} catch (Exception e) {
+				
+			}
+			
+		}
+		
+		
+		
+		return null;
+	}
+	
+	
+	
+	
+/**
+ * Berechnet den String rekursiv nach den Klammerregeln
+ * @param start Ein einfacher String als StringBuilder
+ * @return ein StringBuilder
+ * @throws FailException
+ */
 	public static StringBuilder split(StringBuilder start) throws FailException {
-		// String temp;
-		int klammer = countklammer(start);
-		// while (klammer > 1) {
-		// input.substring(beginIndex);
+		Object[] clip = new Object[10];
 		for (int i = 1; i < start.length(); i++) {
+
 			if (start.charAt(i) == '(') {
 				String temp = split(new StringBuilder(start.substring(i))).toString();
-				System.out.println(1 + "" + temp);
-				String alt = start.toString();
-				input = alt.replaceAll(Pattern.quote(alt), temp + " ");// error... die zeile stimmt nicht!
+				int auf = 0;
+				for (int k = 0; k < start.length(); k++) {
+					if (start.charAt(k) == '(') {
+						auf++;
+					}
+				}
+				String alt = start.substring(i, start.indexOf(")", i) + auf - 1).toString();
+				 System.out.println(1 + ": " + temp + " _ " + alt);
+				start = new StringBuilder(start.toString().replace(alt, temp));
+				 System.out.println("0: " + start);
 			}
 			if (start.charAt(i) == ')') {
-				String first = start.substring(1, i - 1);
-				System.out.println(2 + "" + first);
+				String first = start.substring(1, i);
+				try {
+					Double.parseDouble(first);
+					return new StringBuilder(first);
+				} catch (java.lang.NumberFormatException e) {
+				}
+				 System.out.println(2 + ": " + first);
 				String[] firstsplit = first.split(" ");
 				for (int j = 0; j < firstsplit.length; j++) {
 					clip[j] = search(firstsplit[j]);
+					 System.out.println(" " + clip[j]);
 				}
-				klammer--;
 				return new StringBuilder(resort(clip).toString());
 			}
 
 		}
-		// }
 		return new StringBuilder(start);
-
 	}
 
 	public static boolean testeklammer(String start) throws FailException {
@@ -98,7 +110,7 @@ public class Parse {
 			}
 		}
 		if (wechsel < 0) {
-			System.out.println(auf + "   " + zu + "   " + wechsel);
+			// System.out.println(auf + " " + zu + " " + wechsel);
 			Main.stop("Falsche Klammersetzung #201", input);
 		}
 		if (auf == zu) {
@@ -148,6 +160,8 @@ public class Parse {
 			return "*";
 		case "/":
 			return "/";
+		case " ":
+			return null;
 		default:
 			if (check.contains("/")) {
 				int zaehler = 0;
