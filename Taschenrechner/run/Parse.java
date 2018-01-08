@@ -24,7 +24,7 @@ public class Parse {
 	 * @return StringBuilder
 	 * @throws FailException
 	 */
-	public static StringBuilder split(StringBuilder start) throws FailException {
+	private static StringBuilder split(StringBuilder start) throws FailException {
 		Object[] clip = new Object[20];
 		for (int i = 1; i < start.length(); i++) {
 			if (start.charAt(i) == '(') {

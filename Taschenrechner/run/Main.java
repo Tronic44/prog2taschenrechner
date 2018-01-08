@@ -1,6 +1,4 @@
 public class Main {
-	static int testaud = 0;
-	static int testaud2 = 0;
 
 	public static void main(String[] args) {
 //	String input = "1 / 4-3i + 1 / 4+3i";
