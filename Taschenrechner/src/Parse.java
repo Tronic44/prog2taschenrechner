@@ -101,7 +101,7 @@ public class Parse {
 	}
 
 	/**
-	 * fügt Systaxrichtige Leerzeichen hinzu
+	 * fuegt Systaxrichtige Leerzeichen hinzu
 	 * 
 	 * @param check
 	 *            String Input
@@ -258,11 +258,11 @@ public class Parse {
 	}
 
 	/**
-	 * testet alle Kombinationen, wie eine Imagin�re Zahl aufgabut ist
+	 * testet alle Kombinationen, wie eine Imaginaere Zahl aufgabut ist
 	 * 
 	 * @param check
-	 *            die zu �berpr�fende Zeichenkette
-	 * @return die fertige Imagin�re Zahl
+	 *            die zu ueberpruefende Zeichenkette
+	 * @return die fertige Imaginaere Zahl
 	 * @throws FailException
 	 *             falls eine Konvetion nicht eingehalten wurde
 	 */
@@ -282,7 +282,7 @@ public class Parse {
 						return new Komplex(reell, imag);
 					}
 				} else {
-					Main.stop("keine g�ltige Imagin�re Zahl #231", check);
+					Main.stop("keine gueltige Imaginaere Zahl #231", check);
 				}
 			} else {
 				if (check.contains("-")) {
@@ -298,25 +298,25 @@ public class Parse {
 							return new Komplex(reell, imag * (-1));
 						}
 					} else {
-						Main.stop("keine g�ltige Imagin�re Zahl #232", check);
+						Main.stop("keine gueltige Imaginaere Zahl Zahl #232", check);
 					}
 				} else {
-					Main.stop("keine g�ltige Imagin�re Zahl #233", check);
+					Main.stop("keine gueltige Imaginaere Zahl Zahl #233", check);
 				}
 			}
-			Main.stop("keine g�ltige Imagin�re Zahl #234", check);
+			Main.stop("keine gueltige Imaginaere Zahl #234", check);
 		} catch (Exception e) {
-			Main.stop("Keine g�ltige Imagin�re Zahl #235", check);
+			Main.stop("keine gueltige Imaginaere Zahl #235", check);
 		}
 		return null;
 	}
 
 	/**
-	 * Z�hlt die Elemente abz�glich 'null'
+	 * Zaehlt die Elemente abzueglich 'null'
 	 * 
 	 * @param count
 	 *            Object-Array
-	 * @return Int-Anzahl der Elemente abz�glich derer, die 'null' sind
+	 * @return Int-Anzahl der Elemente abzueglich derer, die 'null' sind
 	 */
 	private static int nullcounter(Object[] count) {
 		int real = 0;
@@ -369,8 +369,8 @@ public class Parse {
 	}
 
 	/**
-	 * Entfernt alle 'null' -Objecte und "sortiert" das Array neu und k�rzt es auf
-	 * die minimale Gr��e
+	 * Entfernt alle 'null' -Objecte und "sortiert" das Array neu und kuerzt es auf
+	 * die minimale Groesse
 	 * 
 	 * @param all
 	 * @return Das verkleinerte Object-Array
@@ -392,9 +392,11 @@ public class Parse {
 		if (all.length == 1) {
 			return all[0];
 		}
-		// wenn nicht wird das Array genommen, kopiert und alle leeren eintr�ge entfernt
+		// wenn nicht wird das Array genommen, kopiert und alle leeren eintraege
+		// entfernt
 		Object[] allmini = all;
-		// das gek�rzte Array wird jetzt im sinne von punkt vor strich durchgegangen und
+		// das gekuerzte Array wird jetzt im sinne von punkt vor strich durchgegangen
+		// und
 		// berechnet
 		Object result;
 		while (punktcounter(removenull(allmini))) {
@@ -437,7 +439,7 @@ public class Parse {
 
 			}
 		}
-		// das nun verk�rze Arry durchl�uft die berechnung nochmal
+		// das nun verkuerze Arry durchlauuft die berechnung nochmal
 		return resort(removenull(allmini));
 	}
 
@@ -543,93 +545,97 @@ public class Parse {
 	}
 
 	private static Object decidestrich(Object[] all, int i) throws FailException {
-		if (all[i].equals("+")) {
-			switch (all[i - 1].getClass().getName()) {
-			case "Bruch":
-				switch (all[i + 1].getClass().getName()) {
-				case "Komplex":
-					return Calculate.add((Bruch) all[i - 1], (Komplex) all[i + 1]);
+		try {
+			if (all[i].equals("+")) {
+				switch (all[i - 1].getClass().getName()) {
 				case "Bruch":
-					return Calculate.add((Bruch) all[i - 1], (Bruch) all[i + 1]);
+					switch (all[i + 1].getClass().getName()) {
+					case "Komplex":
+						return Calculate.add((Bruch) all[i - 1], (Komplex) all[i + 1]);
+					case "Bruch":
+						return Calculate.add((Bruch) all[i - 1], (Bruch) all[i + 1]);
+					case "java.lang.Double":
+						return Calculate.add((Bruch) all[i - 1], (Double) all[i + 1]);
+					default:
+						Main.stop("Dicide Error #261", all[i + 1]);
+						break;
+					}
+					break;
+				case "Komplex":
+					switch (all[i + 1].getClass().getName()) {
+					case "Komplex":
+						return Calculate.add((Komplex) all[i - 1], (Komplex) all[i + 1]);
+					case "Bruch":
+						return Calculate.add((Komplex) all[i - 1], (Bruch) all[i + 1]);
+					case "java.lang.Double":
+						return Calculate.add((Komplex) all[i - 1], (Double) all[i + 1]);
+					default:
+						Main.stop("Dicide Error #262", all[i + 1]);
+						break;
+					}
 				case "java.lang.Double":
-					return Calculate.add((Bruch) all[i - 1], (Double) all[i + 1]);
+					switch (all[i + 1].getClass().getName()) {
+					case "Komplex":
+						return Calculate.add((Double) all[i - 1], (Komplex) all[i + 1]);
+					case "Bruch":
+						return Calculate.add((Double) all[i - 1], (Bruch) all[i + 1]);
+					case "java.lang.Double":
+						return Calculate.add((Double) all[i - 1], (Double) all[i + 1]);
+					default:
+						Main.stop("Dicide Error #263", all[i + 1]);
+						break;
+					}
 				default:
-					Main.stop("Dicide Error #261", all[i + 1]);
+					Main.stop("Fataler Dicide Error #264", "Error");
 					break;
 				}
-				break;
-			case "Komplex":
-				switch (all[i + 1].getClass().getName()) {
-				case "Komplex":
-					return Calculate.add((Komplex) all[i - 1], (Komplex) all[i + 1]);
-				case "Bruch":
-					return Calculate.add((Komplex) all[i - 1], (Bruch) all[i + 1]);
-				case "java.lang.Double":
-					return Calculate.add((Komplex) all[i - 1], (Double) all[i + 1]);
-				default:
-					Main.stop("Dicide Error #262", all[i + 1]);
-					break;
-				}
-			case "java.lang.Double":
-				switch (all[i + 1].getClass().getName()) {
-				case "Komplex":
-					return Calculate.add((Double) all[i - 1], (Komplex) all[i + 1]);
-				case "Bruch":
-					return Calculate.add((Double) all[i - 1], (Bruch) all[i + 1]);
-				case "java.lang.Double":
-					return Calculate.add((Double) all[i - 1], (Double) all[i + 1]);
-				default:
-					Main.stop("Dicide Error #263", all[i + 1]);
-					break;
-				}
-			default:
-				Main.stop("Fataler Dicide Error #264", "Error");
-				break;
 			}
-		}
-		if (all[i].equals("-")) {
-			switch (all[i - 1].getClass().getName()) {
-			case "Bruch":
-				switch (all[i + 1].getClass().getName()) {
-				case "Komplex":
-					return Calculate.sub((Bruch) all[i - 1], (Komplex) all[i + 1]);
+			if (all[i].equals("-")) {
+				switch (all[i - 1].getClass().getName()) {
 				case "Bruch":
-					return Calculate.sub((Bruch) all[i - 1], (Bruch) all[i + 1]);
+					switch (all[i + 1].getClass().getName()) {
+					case "Komplex":
+						return Calculate.sub((Bruch) all[i - 1], (Komplex) all[i + 1]);
+					case "Bruch":
+						return Calculate.sub((Bruch) all[i - 1], (Bruch) all[i + 1]);
+					case "java.lang.Double":
+						return Calculate.sub((Bruch) all[i - 1], (Double) all[i + 1]);
+					default:
+						Main.stop("Dicide Error #265", all[i + 1]);
+						break;
+					}
+					break;
+				case "Komplex":
+					switch (all[i + 1].getClass().getName()) {
+					case "Komplex":
+						return Calculate.sub((Komplex) all[i - 1], (Komplex) all[i + 1]);
+					case "Bruch":
+						return Calculate.sub((Komplex) all[i - 1], (Bruch) all[i + 1]);
+					case "java.lang.Double":
+						return Calculate.sub((Komplex) all[i - 1], (Double) all[i + 1]);
+					default:
+						Main.stop("Dicide Error #266", all[i + 1]);
+						break;
+					}
 				case "java.lang.Double":
-					return Calculate.sub((Bruch) all[i - 1], (Double) all[i + 1]);
+					switch (all[i + 1].getClass().getName()) {
+					case "Komplex":
+						return Calculate.sub((Double) all[i - 1], (Komplex) all[i + 1]);
+					case "Bruch":
+						return Calculate.sub((Double) all[i - 1], (Bruch) all[i + 1]);
+					case "java.lang.Double":
+						return Calculate.sub((Double) all[i - 1], (Double) all[i + 1]);
+					default:
+						Main.stop("Dicide Error #267", all[i + 1]);
+						break;
+					}
 				default:
-					Main.stop("Dicide Error #265", all[i + 1]);
+					Main.stop("Fataler Dicide Error #268", "Error");
 					break;
 				}
-				break;
-			case "Komplex":
-				switch (all[i + 1].getClass().getName()) {
-				case "Komplex":
-					return Calculate.sub((Komplex) all[i - 1], (Komplex) all[i + 1]);
-				case "Bruch":
-					return Calculate.sub((Komplex) all[i - 1], (Bruch) all[i + 1]);
-				case "java.lang.Double":
-					return Calculate.sub((Komplex) all[i - 1], (Double) all[i + 1]);
-				default:
-					Main.stop("Dicide Error #266", all[i + 1]);
-					break;
-				}
-			case "java.lang.Double":
-				switch (all[i + 1].getClass().getName()) {
-				case "Komplex":
-					return Calculate.sub((Double) all[i - 1], (Komplex) all[i + 1]);
-				case "Bruch":
-					return Calculate.sub((Double) all[i - 1], (Bruch) all[i + 1]);
-				case "java.lang.Double":
-					return Calculate.sub((Double) all[i - 1], (Double) all[i + 1]);
-				default:
-					Main.stop("Dicide Error #267", all[i + 1]);
-					break;
-				}
-			default:
-				Main.stop("Fataler Dicide Error #268", "Error");
-				break;
 			}
+		} catch (ArrayIndexOutOfBoundsException e) {
+			Main.stop("Falsche Eingabe", all[i]);
 		}
 		return null;
 	}
