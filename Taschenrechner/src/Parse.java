@@ -73,44 +73,6 @@ public class Parse {
 	}
 
 	/**
-	 * Entfernt Systaxfalsche Leerzeichen
-	 * 
-	 * @param check
-	 *            String Input
-	 * @return String
-	 */
-	private static String removeleere(String check) {
-		char[] all = check.toCharArray();
-		for (int i = 1; i < all.length; i++) {
-			if (all[i - 1] == ' ' && all[i] == ' ') {
-				for (int j = i; j < all.length - 1; j++) {
-					all[j] = all[j + 1];
-				}
-			}
-		}
-		StringBuilder neu = new StringBuilder("");
-		for (int j = 0; j < all.length; j++) {
-			if (all[j] == ' ') {
-				continue;
-			} else {
-				for (int k = j; k < all.length; k++) {
-					neu.append(all[k]);
-				}
-			}
-			break;
-		}
-
-		for (int j = neu.length() - 1; j > 0; j--) {
-			if (neu.charAt(j) == ' ') {
-				neu.deleteCharAt(j);
-			} else {
-				break;
-			}
-		}
-		return neu.toString();
-	}
-
-	/**
 	 * fuegt Systaxrichtige Leerzeichen hinzu
 	 * 
 	 * @param check
@@ -159,6 +121,44 @@ public class Parse {
 			check = check + all[j].toString() + " ";
 		}
 		return removeleere(check.substring(0, check.length() - 1));
+	}
+
+	/**
+	 * Entfernt Systaxfalsche Leerzeichen
+	 * 
+	 * @param check
+	 *            String Input
+	 * @return String
+	 */
+	private static String removeleere(String check) {
+		char[] all = check.toCharArray();
+		for (int i = 1; i < all.length; i++) {
+			if (all[i - 1] == ' ' && all[i] == ' ') {
+				for (int j = i; j < all.length - 1; j++) {
+					all[j] = all[j + 1];
+				}
+			}
+		}
+		StringBuilder neu = new StringBuilder("");
+		for (int j = 0; j < all.length; j++) {
+			if (all[j] == ' ') {
+				continue;
+			} else {
+				for (int k = j; k < all.length; k++) {
+					neu.append(all[k]);
+				}
+			}
+			break;
+		}
+
+		for (int j = neu.length() - 1; j > 0; j--) {
+			if (neu.charAt(j) == ' ') {
+				neu.deleteCharAt(j);
+			} else {
+				break;
+			}
+		}
+		return neu.toString();
 	}
 
 	/**
@@ -377,8 +377,7 @@ public class Parse {
 		// entfernt
 		Object[] allmini = all;
 		// das gekuerzte Array wird jetzt im sinne von punkt vor strich durchgegangen
-		// und
-		// berechnet
+		// und berechnet
 		Object result;
 		while (punktcounter(removenull(allmini))) {
 			allmini = removenull(allmini);
