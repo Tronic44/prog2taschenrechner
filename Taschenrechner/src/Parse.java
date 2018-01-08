@@ -11,7 +11,8 @@ public class Parse {
 	public static void start(String start) throws FailException {
 		testeklammer(start);
 		System.out.println(start);
-		start = "(" + removeleere(start) + ")";
+		start = "(" + order(start) + ")";
+		System.out.println(start);
 		start = split(new StringBuilder(start)).toString();
 		System.out.println("Ergebnis:  " + start);
 	}
@@ -48,6 +49,7 @@ public class Parse {
 				start = new StringBuilder(start.toString().replace(alt, temp));
 				// System.out.println("0: " + start);
 				start = new StringBuilder(order(start.toString()));
+				// System.out.println(start.toString());
 				// System.out.println("0: " + start);
 			}
 			if (start.charAt(i) == ')') {
@@ -88,8 +90,16 @@ public class Parse {
 		}
 		StringBuilder neu = new StringBuilder("");
 		for (int j = 0; j < all.length; j++) {
-			neu.append(all[j]);
+			if (all[j] == ' ') {
+				continue;
+			} else {
+				for (int k = j; k < all.length; k++) {
+					neu.append(all[k]);
+				}
+			}
+			break;
 		}
+
 		for (int j = neu.length() - 1; j > 0; j--) {
 			if (neu.charAt(j) == ' ') {
 				neu.deleteCharAt(j);
@@ -124,51 +134,41 @@ public class Parse {
 				Double.parseDouble(check);
 				continue;
 			} catch (Exception e) {
-				if (check.startsWith("+")) {
-					all[i] = check.replace(Pattern.quote("+"), "+ ");
-					continue;
-				}
-				if (check.startsWith("-")) {
-					all[i] = check.replace(Pattern.quote("-"), "- ");
-					continue;
-				}
-				if (check.startsWith("*")) {
-					all[i] = check.replaceAll(Pattern.quote("*"), "* ");
-					continue;
-				}
-				if (check.startsWith("/")) {
-					all[i] = check.replaceAll(Pattern.quote("/"), "/ ");
-					continue;
-				}
-				if (check.endsWith("+")) {
-					all[i] = check.replaceAll(Pattern.quote("+"), " +");
-					continue;
-				}
-				if (check.endsWith("-")) {
-					all[i] = check.replaceAll(Pattern.quote("-"), " -");
-					continue;
-				}
-				if (check.endsWith("*")) {
-					all[i] = check.replaceAll(Pattern.quote("*"), " *");
-					continue;
-				}
-				if (check.endsWith("/")) {
-					all[i] = check.replaceAll(Pattern.quote("/"), " /");
-					continue;
-				}
+				if (check.contains("+")) {
+					all[i] = check.replace("+", " + ");
 
+					continue;
+				}
+				if (check.contains("-")) {
+					all[i] = check.replace("-", " - ");
+					continue;
+				}
+				if (check.contains("/")) {
+					all[i] = check.replaceAll(Pattern.quote("/"), " / ");
+					continue;
+				}
+				if (check.contains("*")) {
+					all[i] = check.replaceAll(Pattern.quote("*"), " * ");
+					continue;
+				}
 			}
-			// if()
 
 		}
 		check = "";
 		for (int j = 0; j < all.length; j++) {
 			check = check + all[j].toString() + " ";
 		}
-		check.substring(0, check.length() - 1);
-		return check;
+		return removeleere(check.substring(0, check.length() - 1));
 	}
 
+	/**
+	 * Teste nur, ob es gleich viele '(' wie ')' gibt
+	 * 
+	 * @param start
+	 *            String
+	 * @return Boolean
+	 * @throws FailException
+	 */
 	private static boolean testeklammer(String start) throws FailException {
 		int auf = 0, zu = 0, wechsel = 0;
 		for (int i = 0; i < start.length(); i++) {
@@ -182,7 +182,6 @@ public class Parse {
 			}
 		}
 		if (wechsel < 0) {
-			// System.out.println(auf + " " + zu + " " + wechsel);
 			Main.stop("Falsche Klammersetzung #201", start);
 		}
 		if (auf == zu) {
@@ -191,16 +190,6 @@ public class Parse {
 			Main.stop("Falsche Klammersetzung #202", start);
 		}
 		return false;
-	}
-
-	private static int countklammer(StringBuilder start) throws FailException {
-		int zu = 0;
-		for (int i = 0; i < start.length(); i++) {
-			if (start.charAt(i) == ')') {
-				zu++;
-			}
-		}
-		return zu;
 	}
 
 	/**
@@ -336,16 +325,12 @@ public class Parse {
 	 * @return Boolean
 	 */
 	private static boolean punktcounter(Object[] count) {
-		int test = 0;
 		for (int h = 0; count.length > h; h++) {
 			if (count[h].equals("*") || count[h].equals("/")) {
-				test += 1;
+				return true;
 			}
 		}
-		if (test == 0) {
-			return false;
-		}
-		return true;
+		return false;
 	}
 
 	/**
@@ -356,16 +341,12 @@ public class Parse {
 	 * @return Boolean
 	 */
 	private static boolean strichcounter(Object[] count) {
-		int test = 0;
 		for (int h = 0; count.length > h; h++) {
 			if (count[h].equals("+") || count[h].equals("-")) {
-				test += 1;
+				return true;
 			}
 		}
-		if (test == 0) {
-			return false;
-		}
-		return true;
+		return false;
 	}
 
 	/**
@@ -539,9 +520,7 @@ public class Parse {
 		} catch (ArrayIndexOutOfBoundsException e) {
 			Main.stop("Falsche Eingabe", all[i]);
 		}
-
 		return null;
-
 	}
 
 	private static Object decidestrich(Object[] all, int i) throws FailException {

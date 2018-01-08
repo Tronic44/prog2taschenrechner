@@ -4,15 +4,16 @@ public class Calculate{
 	
 	private static double toDouble(Bruch a){
 		return (double) a.getZeahler()/ (double) a.getNenner();
-	}
-	
-	
+	}	
 	private static Bruch multtoBruch(Bruch a, double d){
 		int k=10_000;
 		int zaehler = (int)  (d*k*a.getZeahler());
 		int nenner = (int) (a.getNenner()*k);
 		return new Bruch(zaehler,nenner);
 	}
+	
+	
+	
 	public static Object mult(Double double1, Double double2) {
 		return double1*double2;
 	}
@@ -44,11 +45,7 @@ public class Calculate{
 		double multreell = i2.getReell()*i.getReell()-i2.getImag()*i.getImag();
 		double multimag = i2.getReell()*i.getImag()+i2.getImag()*i.getReell();
 		return new Komplex(multreell,multimag);
-	
 	}
-	
-	
-	
 	
 	
 	
@@ -86,9 +83,6 @@ public class Calculate{
 	
 	
 	
-	
-	
-	
 	public static Object sub(double d1, double d2){
 		return d1-d2;
 	}
@@ -118,10 +112,6 @@ public class Calculate{
 	public static Object sub(Komplex i1, Komplex i2){
 		return new Komplex(i1.getReell()-i2.getReell(),i1.getImag()-i2.getImag());
 	}
-	
-	
-	
-	
 	
 	
 	
