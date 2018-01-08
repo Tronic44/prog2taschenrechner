@@ -5,7 +5,7 @@ public class Main {
 	public static void main(String[] args) {
 //	String input = "1 / 4-3i + 1 / 4+3i";
 		
-		String input = "((1 + 2 * (3 + 4)) + (5 * (2 / 2)))";
+		String input = "1 + 2 * (3 + 4) + (5 * (2 / 2))";
 		try {
 			Parse.start(input);
 		} catch (FailException e) {

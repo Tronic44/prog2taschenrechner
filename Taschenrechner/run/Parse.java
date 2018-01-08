@@ -1,14 +1,8 @@
-import java.util.Iterator;
 import java.util.regex.Pattern;
 
 public class Parse {
-	private static Object[] list = new Object[10];
-	// private static Object[] clip = new Object[10];
-	private static String input;
 
 	/**
-	 * Diese Methode teilt den Eingabe String in ein Array auf, und wandelt es ein
-	 * ein Object Array um Modifiziert die Klassenvariable Object list[] und clip[]!
 	 * 
 	 * @param input
 	 *            Der Input String, der Analysiert werden soll
@@ -16,66 +10,45 @@ public class Parse {
 	 */
 	public static void start(String start) throws FailException {
 		testeklammer(start);
-		if (start.contains("(")) {
-			input = split(new StringBuilder(start)).toString();
-			System.out.println("Ergebnis:  " + input);
-		} else {
-			String[] splited = start.split(" ");
-			for (int i = 0; i < splited.length; i++) {
-				list[i] = search(splited[i]);
-			}
-//			for (Object i : list) {
-//				System.out.println(i);
-//			}
-
-			System.out.println("Egebnis: " + resort(list));
-		}
-
+		System.out.println(start);
+		start = "(" + removeleere(start) + ")";
+		start = split(new StringBuilder(start)).toString();
+		System.out.println("Ergebnis:  " + start);
 	}
-	private static String order(String check) {
-		String[] all = check.split(" ");
-		for (int i = 0 ; i < all.length ; i++) {
-			if(all[i].contains("i")) {
-				continue;
-			}try {
-				Double.parseDouble(all[i]);
-				continue;
-			} catch (Exception e) {
-				
-			}
-			
-		}
-		
-		
-		
-		return null;
-	}
-	
-	
-	
-	
-/**
- * Berechnet den String rekursiv nach den Klammerregeln
- * @param start Ein einfacher String als StringBuilder
- * @return ein StringBuilder
- * @throws FailException
- */
+
+	/**
+	 * Berechnet den String rekursiv nach den Klammerregeln
+	 * 
+	 * @param start
+	 *            StringBuilder
+	 * @return StringBuilder
+	 * @throws FailException
+	 */
 	public static StringBuilder split(StringBuilder start) throws FailException {
-		Object[] clip = new Object[10];
+		Object[] clip = new Object[20];
 		for (int i = 1; i < start.length(); i++) {
-
 			if (start.charAt(i) == '(') {
 				String temp = split(new StringBuilder(start.substring(i))).toString();
-				int auf = 0;
-				for (int k = 0; k < start.length(); k++) {
+				int klammer = 0, place = 0;
+				for (int k = i; k < start.length(); k++) {
 					if (start.charAt(k) == '(') {
-						auf++;
+						klammer--;
+					} else {
+						if (start.charAt(k) == ')') {
+							klammer++;
+						}
+					}
+					if (klammer == 0) {
+						place = k + 1;
+						break;
 					}
 				}
-				String alt = start.substring(i, start.indexOf(")", i) + auf - 1).toString();
-				 System.out.println(1 + ": " + temp + " _ " + alt);
+				String alt = start.substring(i, place).toString();
+				// System.out.println(1 + ": " + temp + " _ " + alt);
 				start = new StringBuilder(start.toString().replace(alt, temp));
-				 System.out.println("0: " + start);
+				// System.out.println("0: " + start);
+				start = new StringBuilder(order(start.toString()));
+				// System.out.println("0: " + start);
 			}
 			if (start.charAt(i) == ')') {
 				String first = start.substring(1, i);
@@ -84,17 +57,116 @@ public class Parse {
 					return new StringBuilder(first);
 				} catch (java.lang.NumberFormatException e) {
 				}
-				 System.out.println(2 + ": " + first);
+				// System.out.println(2 + ": " + first);
 				String[] firstsplit = first.split(" ");
 				for (int j = 0; j < firstsplit.length; j++) {
 					clip[j] = search(firstsplit[j]);
-					 System.out.println(" " + clip[j]);
+					// System.out.println(" " + clip[j]);
 				}
 				return new StringBuilder(resort(clip).toString());
 			}
 
 		}
 		return new StringBuilder(start);
+	}
+
+	/**
+	 * Entfernt Systaxfalsche Leerzeichen
+	 * 
+	 * @param check
+	 *            String Input
+	 * @return String
+	 */
+	private static String removeleere(String check) {
+		char[] all = check.toCharArray();
+		for (int i = 1; i < all.length; i++) {
+			if (all[i - 1] == ' ' && all[i] == ' ') {
+				for (int j = i; j < all.length - 1; j++) {
+					all[j] = all[j + 1];
+				}
+			}
+		}
+		StringBuilder neu = new StringBuilder("");
+		for (int j = 0; j < all.length; j++) {
+			neu.append(all[j]);
+		}
+		for (int j = neu.length() - 1; j > 0; j--) {
+			if (neu.charAt(j) == ' ') {
+				neu.deleteCharAt(j);
+			} else {
+				break;
+			}
+		}
+		return neu.toString();
+	}
+
+	/**
+	 * fügt Systaxrichtige Leerzeichen hinzu
+	 * 
+	 * @param check
+	 *            String Input
+	 * @return String
+	 */
+	private static String order(String check) {
+		check = removeleere(check);
+		// System.out.println(check);
+		String[] all = check.split(" ");
+		for (int i = 0; i < all.length; i++) {
+			check = all[i];
+			if (check.contains("i")) {
+				continue;
+			}
+			if (check.matches(Pattern.quote("+")) || check.matches(Pattern.quote("-"))
+					|| check.matches(Pattern.quote("*")) || check.matches(Pattern.quote("/"))) {
+				continue;
+			}
+			try {
+				Double.parseDouble(check);
+				continue;
+			} catch (Exception e) {
+				if (check.startsWith("+")) {
+					all[i] = check.replace(Pattern.quote("+"), "+ ");
+					continue;
+				}
+				if (check.startsWith("-")) {
+					all[i] = check.replace(Pattern.quote("-"), "- ");
+					continue;
+				}
+				if (check.startsWith("*")) {
+					all[i] = check.replaceAll(Pattern.quote("*"), "* ");
+					continue;
+				}
+				if (check.startsWith("/")) {
+					all[i] = check.replaceAll(Pattern.quote("/"), "/ ");
+					continue;
+				}
+				if (check.endsWith("+")) {
+					all[i] = check.replaceAll(Pattern.quote("+"), " +");
+					continue;
+				}
+				if (check.endsWith("-")) {
+					all[i] = check.replaceAll(Pattern.quote("-"), " -");
+					continue;
+				}
+				if (check.endsWith("*")) {
+					all[i] = check.replaceAll(Pattern.quote("*"), " *");
+					continue;
+				}
+				if (check.endsWith("/")) {
+					all[i] = check.replaceAll(Pattern.quote("/"), " /");
+					continue;
+				}
+
+			}
+			// if()
+
+		}
+		check = "";
+		for (int j = 0; j < all.length; j++) {
+			check = check + all[j].toString() + " ";
+		}
+		check.substring(0, check.length() - 1);
+		return check;
 	}
 
 	public static boolean testeklammer(String start) throws FailException {
@@ -111,12 +183,12 @@ public class Parse {
 		}
 		if (wechsel < 0) {
 			// System.out.println(auf + " " + zu + " " + wechsel);
-			Main.stop("Falsche Klammersetzung #201", input);
+			Main.stop("Falsche Klammersetzung #201", start);
 		}
 		if (auf == zu) {
 			return true;
 		} else {
-			Main.stop("Falsche Klammersetzung #202", input);
+			Main.stop("Falsche Klammersetzung #202", start);
 		}
 		return false;
 	}
@@ -173,13 +245,13 @@ public class Parse {
 						nenner = Integer.parseInt(newbruch[1]);
 						return new Bruch(zaehler, nenner);
 					} catch (NumberFormatException e) {
-						Main.stop("In Br�chen stehen ganze Zahlen #221", check);
+						Main.stop("In Bruechen stehen ganze Zahlen #221", check);
 					}
 				} else {
 					Main.stop("Kein echter Bruch #222", check);
 				}
 			}
-			Main.stop("kein G�ltiges Zeichen #223", check);
+			Main.stop("kein Gueltiges Zeichen #223", check);
 			return null;
 		}
 
