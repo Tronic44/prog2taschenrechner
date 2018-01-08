@@ -169,7 +169,7 @@ public class Parse {
 		return check;
 	}
 
-	public static boolean testeklammer(String start) throws FailException {
+	private static boolean testeklammer(String start) throws FailException {
 		int auf = 0, zu = 0, wechsel = 0;
 		for (int i = 0; i < start.length(); i++) {
 			if (start.charAt(i) == '(') {
