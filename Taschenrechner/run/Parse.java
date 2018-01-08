@@ -193,7 +193,7 @@ public class Parse {
 		return false;
 	}
 
-	public static int countklammer(StringBuilder start) throws FailException {
+	private static int countklammer(StringBuilder start) throws FailException {
 		int zu = 0;
 		for (int i = 0; i < start.length(); i++) {
 			if (start.charAt(i) == ')') {
@@ -387,7 +387,7 @@ public class Parse {
 		return allmini;
 	}
 
-	public static Object resort(Object[] all) throws FailException {
+	private static Object resort(Object[] all) throws FailException {
 		// wenn das Array nur noch ein Element hat, muss es die L�sung sein
 		if (all.length == 1) {
 			return all[0];
@@ -542,7 +542,7 @@ public class Parse {
 
 	}
 
-	public static Object decidestrich(Object[] all, int i) throws FailException {
+	private static Object decidestrich(Object[] all, int i) throws FailException {
 		if (all[i].equals("+")) {
 			switch (all[i - 1].getClass().getName()) {
 			case "Bruch":
