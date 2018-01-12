@@ -82,9 +82,12 @@ public class Parse {
 	private static String removeleere(String check) {
 		char[] all = check.toCharArray();
 		for (int i = 1; i < all.length; i++) {
-			if (all[i - 1] == ' ' && all[i] == ' ') {
+			if ((all[i - 1] == ' ' && all[i] == ' ') || (all[i] == 'i' && all[i - 1] == 'i')) {
 				for (int j = i; j < all.length - 1; j++) {
 					all[j] = all[j + 1];
+					if (j <= (all.length - 2)) {
+						all[j + 1] = ' ';
+					}
 				}
 			}
 		}
@@ -123,9 +126,9 @@ public class Parse {
 		String[] all = check.split(" ");
 		for (int i = 0; i < all.length; i++) {
 			check = all[i];
-			if (check.contains("i")) {
-				continue;
-			}
+			// if (check.contains("i")) {
+			// continue;
+			// }
 			if (check.matches(Pattern.quote("+")) || check.matches(Pattern.quote("-"))
 					|| check.matches(Pattern.quote("*")) || check.matches(Pattern.quote("/"))) {
 				continue;
@@ -223,6 +226,8 @@ public class Parse {
 			return "/";
 		case " ":
 			return null;
+		case "":
+			return null;
 		default:
 			if (check.contains("/")) {
 				int zaehler = 0;
@@ -290,7 +295,22 @@ public class Parse {
 						Main.stop("keine gueltige Imaginaere Zahl Zahl #232", check);
 					}
 				} else {
-					Main.stop("keine gueltige Imaginaere Zahl Zahl #233", check);
+					if (check.contains("i")) {
+						String[] newimag = check.split("i");
+						for (String string : newimag) {
+							if (string == null) {
+								continue;
+							} else {
+								try {
+									imag = Double.parseDouble(string);
+									return new Komplex(0, imag);
+								} catch (Exception e) {
+								}
+							}
+						}
+					} else {
+						Main.stop("keine gueltige Imaginaere Zahl Zahl #233", check);
+					}
 				}
 			}
 			Main.stop("keine gueltige Imaginaere Zahl #234", check);
