@@ -129,12 +129,21 @@ public class Parse {
 					continue;
 				}
 				if (check.contains("/")) {
-					all[i] = check.replaceAll(Pattern.quote("/"), " / ");
+					try {
+						all[i] = check.replaceAll(Pattern.quote("/"), " / ");
+						all[i] = check.replace("/", " / ");
+					} catch (Exception f) {
+					}
 					continue;
 				}
 				if (check.contains("*")) {
-					all[i] = check.replaceAll(Pattern.quote("*"), " * ");
-					continue;
+					try {
+						all[i] = check.replaceAll(Pattern.quote("*"), " * ");
+						all[i] = check.replace("*", " * ");
+						continue;
+					} catch (Exception d) {
+
+					}
 				}
 			}
 
@@ -172,7 +181,7 @@ public class Parse {
 		if (auf == zu) {
 			return true;
 		} else {
-			Main.stop("Falsche Klammersetzung",202, start);
+			Main.stop("Falsche Klammersetzung", 202, start);
 		}
 		return false;
 	}
@@ -221,10 +230,10 @@ public class Parse {
 						nenner = Integer.parseInt(newbruch[1]);
 						return new Bruch(zaehler, nenner);
 					} catch (NumberFormatException e) {
-						Main.stop("In Bruechen stehen ganze Zahlen" ,221, check);
+						Main.stop("In Bruechen stehen ganze Zahlen", 221, check);
 					}
 				} else {
-					Main.stop("Kein echter Bruch" ,222, check);
+					Main.stop("Kein echter Bruch", 222, check);
 				}
 			}
 			Main.stop("kein Gueltiges Zeichen", 223, check);
@@ -258,7 +267,7 @@ public class Parse {
 						return new Komplex(reell, imag);
 					}
 				} else {
-					Main.stop("keine gueltige Imaginaere Zahl" ,231, check);
+					Main.stop("keine gueltige Imaginaere Zahl", 231, check);
 				}
 			} else {
 				if (check.contains("-")) {
@@ -274,7 +283,7 @@ public class Parse {
 							return new Komplex(reell, imag * (-1));
 						}
 					} else {
-						Main.stop("keine gueltige Imaginaere Zahl Zahl",232, check);
+						Main.stop("keine gueltige Imaginaere Zahl Zahl", 232, check);
 					}
 				} else {
 					if (check.contains("i")) {
@@ -291,7 +300,7 @@ public class Parse {
 							}
 						}
 					} else {
-						Main.stop("keine gueltige Imaginaere Zahl Zahl" ,233, check);
+						Main.stop("keine gueltige Imaginaere Zahl Zahl", 233, check);
 					}
 				}
 			}
@@ -515,7 +524,7 @@ public class Parse {
 						break;
 					}
 				default:
-					Main.stop("Fataler Dicide Error",258, "Error");
+					Main.stop("Fataler Dicide Error", 258, "Error");
 					break;
 				}
 			}
@@ -551,7 +560,7 @@ public class Parse {
 					case "java.lang.Double":
 						return Calculate.add((Komplex) all[i - 1], (Double) all[i + 1]);
 					default:
-						Main.stop("Dicide Error" ,262, all[i + 1]);
+						Main.stop("Dicide Error", 262, all[i + 1]);
 						break;
 					}
 				case "java.lang.Double":
@@ -582,7 +591,7 @@ public class Parse {
 					case "java.lang.Double":
 						return Calculate.sub((Bruch) all[i - 1], (Double) all[i + 1]);
 					default:
-						Main.stop("Dicide Error" ,265, all[i + 1]);
+						Main.stop("Dicide Error", 265, all[i + 1]);
 						break;
 					}
 					break;
