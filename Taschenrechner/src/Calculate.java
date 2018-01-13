@@ -3,6 +3,7 @@ public class Calculate {
 
 	private static double toDouble(Bruch a) {
 		return (double) a.getZeahler() / (double) a.getNenner();
+		
 	}
 
 	private static Bruch multtoBruch(Bruch a, double d) {
@@ -133,44 +134,59 @@ public class Calculate {
 		return new Komplex(i1.getReell() - i2.getReell(), i1.getImag() - i2.getImag());
 	}
 
-	public static Object div(double d1, double d2) {
+	public static Object div(double d1, double d2) throws FailException {
+		if(d2 == 0) {
+			Main.stop("Man darf nicht durch 0 teilen", 302, d2);
+		}
 		return d1 / d2;
 	}
 
-	public static Object div(double d, Bruch b) {
+	public static Object div(double d, Bruch b) throws FailException {
+		if(toDouble(b)==0) {
+			Main.stop("man darf nicht durch 0 teilen!", 303, b);
+		}
 		return d / toDouble(b);
 	}
 
-	public static Object div(Bruch b, double d) {
+	public static Object div(Bruch b, double d) throws FailException {
 		return div(d, b);
 	}
 
 	public static Object div(Bruch b1, Bruch b2) {
+		if(b1.getNenner() * b2.getZeahler() == 0) {
+			return b1.getZeahler() * b2.getNenner();
+		}
 		return new Bruch(b1.getZeahler() * b2.getNenner(), b1.getNenner() * b2.getZeahler());
 	}
 
-	public static Object div(double d, Komplex i) {
+	public static Object div(double d, Komplex i) throws FailException {
 		Komplex i2 = new Komplex(d, 0);
 		return div(i2, i);
 	}
 
-	public static Object div(Komplex i, double d) {
+	public static Object div(Komplex i, double d) throws FailException {
+		if(d==0) {
+			Main.stop("man darf nicht durch 0 teilen!", 304, d);
+		}
 		return new Komplex(i.getReell() / d, i.getImag() / d);
 	}
 
-	public static Object div(Komplex i, Bruch b) {
+	public static Object div(Komplex i, Bruch b) throws FailException {
 		return div(i, toDouble(b));
 	}
 
-	public static Object div(Bruch b, Komplex i) {
+	public static Object div(Bruch b, Komplex i) throws FailException {
 		return div(toDouble(b), i);
 	}
 
-	public static Object div(Komplex i1, Komplex i2) {
+	public static Object div(Komplex i1, Komplex i2) throws FailException {
 		Komplex k1 = new Komplex(i2.komrezi().getReell(), i2.komrezi().getImag());
 		double multreellup = k1.getReell() * i1.getReell() - k1.getImag() * i1.getImag();
 		double multimag = k1.getReell() * i1.getImag() + k1.getImag() * i1.getReell();
 		double multreelldown = k1.getReell() * i2.getReell() - k1.getImag() * i2.getImag();
+		if(multreelldown==0) {
+			Main.stop("man darf nicht durch 0 teilen!", 304, i2);
+		}
 		return (new Komplex(multreellup / multreelldown, multimag / multreelldown));
 	}
 
