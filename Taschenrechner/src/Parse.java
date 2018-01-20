@@ -102,7 +102,7 @@ public class Parse {
 			}
 			break;
 		}
-		System.out.println(neu.toString()+ "_#");
+		System.out.println(neu.toString() + "_#");
 		return neu.toString();
 	}
 
@@ -114,7 +114,7 @@ public class Parse {
 	 * @return String
 	 */
 	private static String order(String check) {
-		System.out.println("#_" + check +"_");
+		System.out.println("#_" + check + "_");
 		check = removeleere(check);
 		System.out.println(check);
 		String[] all = check.split(" ");
@@ -132,18 +132,18 @@ public class Parse {
 				if (check.contains("+")) {
 					all[i] = check.replace("+", " + ");
 
-//					continue;
+					// continue;
 				}
 				if (check.contains("-")) {
 					all[i] = check.replace("-", " - ");
-//					continue;
+					// continue;
 				}
 				if (check.contains("*")) {
 					try {
 						all[i] = check.replaceAll(Pattern.quote("*"), " * ");
 						all[i] = check.replace("*", " * ");
-						System.out.println(all[i]+"_*_");
-//						continue;
+						System.out.println(all[i] + "_*_");
+						// continue;
 					} catch (Exception d) {
 						System.out.println(d);
 
@@ -156,7 +156,7 @@ public class Parse {
 					} catch (Exception f) {
 						System.out.println(f);
 					}
-//					continue;
+					// continue;
 				}
 
 			}

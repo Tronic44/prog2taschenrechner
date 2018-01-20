@@ -63,9 +63,10 @@ public class GUI {
 					try {
 						textField_ausgabe.setText(Parse.start(textField_eingabe.getText()));
 					} catch (NullPointerException a) {
-						JOptionPane.showMessageDialog(null, "Kritscher Fehler:  " + a + " \n" + "Versuche mal Leerzeichen hinzuzufügen oder zu entfernen" );
-						System.out.println("error1: "+a);
-					} catch(Exception b) {
+						JOptionPane.showMessageDialog(null, "Kritscher Fehler:  " + a + " \n"
+								+ "Versuche mal Leerzeichen hinzuzufügen oder zu entfernen");
+						System.out.println("error1: " + a);
+					} catch (Exception b) {
 					}
 				}
 				textField_eingabe.requestFocus();
@@ -76,23 +77,22 @@ public class GUI {
 				try {
 					textField_ausgabe.setText(Parse.start(textField_eingabe.getText()));
 				} catch (NullPointerException e) {
-					JOptionPane.showMessageDialog(null, "Kritscher Fehler:  " + e + " \n" + "Versuche mal Leerzeichen hinzuzufügen oder zu entfernen" );
-					System.out.println("error2: " +e);
-				}catch(Exception b) {
+					JOptionPane.showMessageDialog(null, "Kritscher Fehler:  " + e + " \n"
+							+ "Versuche mal Leerzeichen hinzuzufügen oder zu entfernen");
+					System.out.println("error2: " + e);
+				} catch (Exception b) {
 				}
-			textField_eingabe.requestFocus();
+				textField_eingabe.requestFocus();
 			}
 		});
 
 		JButton btnHilfe = new JButton("Was kann ich eingeben?");
 		btnHilfe.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
-				JOptionPane.showMessageDialog(null,
-						"Was darf man eingeben?" + "\n" + "Zahlen als Integer oder Double " + "\n" + "Natürlich + - * /"
-								+ "\n" + "Für ein Bruch einfach '/' nutzen" + "\n"
-								+ "Eine imaginäre Zahl einfach mit i kennzeichnen" + "\n" + "Belibig viele Klammern"
-								+"\n" +"\n"+ "Muss ich noch was Beachten?" +"\n" +"Eigentlich nicht!"
-								+ "\n" + "Viel Spaß");
+				JOptionPane.showMessageDialog(null, "Was darf man eingeben?" + "\n" + "Zahlen als Integer oder Double "
+						+ "\n" + "Natürlich + - * /" + "\n" + "Für ein Bruch einfach '/' nutzen" + "\n"
+						+ "Eine imaginäre Zahl einfach mit i kennzeichnen" + "\n" + "Belibig viele Klammern" + "\n"
+						+ "\n" + "Muss ich noch was Beachten?" + "\n" + "Eigentlich nicht!" + "\n" + "Viel Spaß");
 
 				textField_eingabe.requestFocus();
 			}
@@ -104,7 +104,7 @@ public class GUI {
 
 		textField_eingabe.requestFocus();
 		frmTaschenrechnerByYannick.getRootPane().setDefaultButton(btnBerechne);
-		
+
 		JButton btnDamitWeiterRechnen = new JButton("damit weiter rechnen");
 		btnDamitWeiterRechnen.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
@@ -115,7 +115,7 @@ public class GUI {
 		});
 		btnDamitWeiterRechnen.setBounds(224, 263, 227, 23);
 		frmTaschenrechnerByYannick.getContentPane().add(btnDamitWeiterRechnen);
-		
+
 		JButton btnClear = new JButton("Clear");
 		btnClear.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
