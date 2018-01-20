@@ -9,10 +9,17 @@ public class Parse {
 	 * @throws FailException
 	 */
 	public static String start(String start) throws FailException {
+		testeeingabe(start);
 		testeklammer(start);
 		start = "(" + order(start) + ")";
 		start = split(new StringBuilder(start)).toString();
 		return start.toString();
+	}
+
+	private static void testeeingabe(String check) throws FailException {
+		if (check.equals("") || removeleere(check).equals("") || removeleere(check).equals(" ")) {
+			Main.stop("Du glaubst ernsthaft, damit kommst du druch?", 000, check);
+		}
 	}
 
 	/**
@@ -95,6 +102,7 @@ public class Parse {
 			}
 			break;
 		}
+		System.out.println(neu.toString()+ "_#");
 		return neu.toString();
 	}
 
@@ -106,7 +114,9 @@ public class Parse {
 	 * @return String
 	 */
 	private static String order(String check) {
+		System.out.println("#_" + check +"_");
 		check = removeleere(check);
+		System.out.println(check);
 		String[] all = check.split(" ");
 		for (int i = 0; i < all.length; i++) {
 			check = all[i];
@@ -122,29 +132,33 @@ public class Parse {
 				if (check.contains("+")) {
 					all[i] = check.replace("+", " + ");
 
-					continue;
+//					continue;
 				}
 				if (check.contains("-")) {
 					all[i] = check.replace("-", " - ");
-					continue;
+//					continue;
+				}
+				if (check.contains("*")) {
+					try {
+						all[i] = check.replaceAll(Pattern.quote("*"), " * ");
+						all[i] = check.replace("*", " * ");
+						System.out.println(all[i]+"_*_");
+//						continue;
+					} catch (Exception d) {
+						System.out.println(d);
+
+					}
 				}
 				if (check.contains("/")) {
 					try {
 						all[i] = check.replaceAll(Pattern.quote("/"), " / ");
 						all[i] = check.replace("/", " / ");
 					} catch (Exception f) {
+						System.out.println(f);
 					}
-					continue;
+//					continue;
 				}
-				if (check.contains("*")) {
-					try {
-						all[i] = check.replaceAll(Pattern.quote("*"), " * ");
-						all[i] = check.replace("*", " * ");
-						continue;
-					} catch (Exception d) {
 
-					}
-				}
 			}
 
 		}
@@ -152,7 +166,8 @@ public class Parse {
 		for (int j = 0; j < all.length; j++) {
 			check = check + all[j].toString() + " ";
 		}
-		return removeleere(check.substring(0, check.length() - 1));
+		System.out.println("##_" + check + "_");
+		return (check.substring(0, check.length() - 1));
 	}
 
 	/**
@@ -379,7 +394,7 @@ public class Parse {
 		return allmini;
 	}
 
-	private static Object resort(Object[] all) throws FailException {
+	static Object resort(Object[] all) throws FailException {
 		// wenn das Array nur noch ein Element hat, muss es die L�sung sein
 		if (all.length == 1) {
 			return all[0];

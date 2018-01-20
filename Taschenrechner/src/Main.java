@@ -5,31 +5,29 @@ import javax.swing.JOptionPane;
 public class Main {
 
 	public static void main(String[] args) {
+		Object[] test ={1.0, "/", new Komplex(4,-3), "+", 1.0, "/" , new Komplex(4,3)};
+		 //		Object[] test = {new Komplex(2,-1), "/", new Komplex(1,-1)};
+		 		try {
+		 			System.out.println(Parse.resort(test));
+		 		} catch (FailException e) {
+		 			System.out.println("ups");
+		 		}
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
+				
 				try {
 					GUI window = new GUI();
 					window.frmTaschenrechnerByYannick.setVisible(true);
+//					Object[] = {new Komplex (1,2), "*", 
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
 		});
-
-		// String input = "1 / 4-3i + 1 / 4+3i";
-		// String input = "4/6";
-		// String input = "1+2*(3+4)+(5*(2/2))+4+3i";
-		// try {
-		// Parse.start(input);
-		// } catch (FailException e) {
-		// System.out.println();
-		// }
-
 	}
 
 	public static void stop(String error, int code, Object a) throws FailException {
 		JOptionPane.showMessageDialog(null, "Fehlercode: \"" + code + "\"" + "\n" + error + ": \" " + a + " \"");
-		System.out.println(error + ":  " + a);
 		throw new FailException();
 
 	}
@@ -39,3 +37,9 @@ public class Main {
 	}
 
 }
+
+//negative zahlen (bei + und -)
+//3.5* 1/2
+//3.5*11/21
+//remove leere neu schreiben
+//ab und zu wird keine ausgabe gemacht und kein Fehler geworfen

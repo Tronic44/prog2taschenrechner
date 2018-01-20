@@ -62,7 +62,10 @@ public class GUI {
 				if (e.getKeyCode() == KeyEvent.VK_ENTER) {
 					try {
 						textField_ausgabe.setText(Parse.start(textField_eingabe.getText()));
-					} catch (Exception a) {
+					} catch (NullPointerException a) {
+						JOptionPane.showMessageDialog(null, "Kritscher Fehler:  " + a + " \n" + "Versuche mal Leerzeichen hinzuzufügen oder zu entfernen" );
+						System.out.println("error1: "+a);
+					} catch(Exception b) {
 					}
 				}
 				textField_eingabe.requestFocus();
@@ -72,7 +75,10 @@ public class GUI {
 			public void actionPerformed(ActionEvent arg0) {
 				try {
 					textField_ausgabe.setText(Parse.start(textField_eingabe.getText()));
-				} catch (Exception e) {
+				} catch (NullPointerException e) {
+					JOptionPane.showMessageDialog(null, "Kritscher Fehler:  " + e + " \n" + "Versuche mal Leerzeichen hinzuzufügen oder zu entfernen" );
+					System.out.println("error2: " +e);
+				}catch(Exception b) {
 				}
 			textField_eingabe.requestFocus();
 			}
