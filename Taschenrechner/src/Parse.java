@@ -114,7 +114,6 @@ public class Parse {
 	 * @return String
 	 */
 	private static String order(String check) {
-		System.out.println("#_" + check + "_");
 		check = removeleere(check);
 		System.out.println(check);
 		String[] all = check.split(" ");
@@ -142,7 +141,6 @@ public class Parse {
 					try {
 						all[i] = check.replaceAll(Pattern.quote("*"), " * ");
 						all[i] = check.replace("*", " * ");
-						System.out.println(all[i] + "_*_");
 						// continue;
 					} catch (Exception d) {
 						System.out.println(d);
@@ -166,7 +164,6 @@ public class Parse {
 		for (int j = 0; j < all.length; j++) {
 			check = check + all[j].toString() + " ";
 		}
-		System.out.println("##_" + check + "_");
 		return (check.substring(0, check.length() - 1));
 	}
 
